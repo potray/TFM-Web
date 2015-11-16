@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo right">Hand Control Platform</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="registration">Registration</a></li>
+            </ul>
+        </div>
+    </nav>
+<div class="container">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

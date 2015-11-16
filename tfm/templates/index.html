@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>hi</title>
-</head>
-<body>
-{% load socialaccount %}
-{% providers_media_js %}
-<a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Hand Control Platform{% endblock title %}
+
+{% block content %}
+    <h1>Welcome to the Hand Control Platform.</h1>
+    <h3>Please log in or register</h3>
+{% endblock content %}
