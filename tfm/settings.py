@@ -145,7 +145,7 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
-        'SCOPE': ['email', 'publish_stream'],
+        'SCOPE': ['email'],
         'AUTH_PARAMS':{'auth_type':'reauthenticate'},
         'METHOD': 'js_sdk'  # instead of 'oauth2'
     }
