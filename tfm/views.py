@@ -21,7 +21,7 @@ def registration(request):
             newUser.save()
             return HttpResponseRedirect('/')
         else:
-            print ('defuq?')
+            print (form.errors)
     else:
         form = UserRegistrationForm()
     return render(request, 'registration.html', {'form': form})

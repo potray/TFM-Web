@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django.utils.translation import ugettext_lazy as _
 from django import forms
 from models import TfmUser
 
@@ -13,4 +14,9 @@ class UserRegistrationForm(ModelForm):
         fields = '__all__'
         widgets = {
             'password': forms.PasswordInput(),
+        }
+        error_messages = {
+            'email': {
+                'unique': _("The email already exists."),
+            },
         }
