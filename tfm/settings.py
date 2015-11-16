@@ -81,6 +81,9 @@ WSGI_APPLICATION = 'tfm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+print(os.getenv('SERVER_SOFTWARE', ''))
+print('hi')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -97,12 +100,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+#DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
 # Parse database configuration from $DATABASE_URL
 #DATABASES['default'] = dj_database_url.config()
 
 # Enable Connection Pooling (if desired)
 #DATABASES['default']['ENGINE'] = 'django_postgrespool'
+#DATABASES['default']['NAME'] = 'tfmherokudb'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
