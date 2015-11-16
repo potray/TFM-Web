@@ -76,7 +76,7 @@ TEMPLATE_DIRS = {
 }
 
 WSGI_APPLICATION = 'tfm.wsgi.application'
-
+DATABASES = {}
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -87,7 +87,8 @@ if (os.getenv('COMPUTERNAME', '')).startswith('YARRICK'):
             'NAME': 'db.sqlite3'
         }
     }
-
+else:
+    DATABASES['default'] = dj_database_url.config()
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -100,7 +101,6 @@ USE_TZ = True
 #DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
 # Parse database configuration from $DATABASE_URL
-#DATABASES['default'] = dj_database_url.config()
 
 # Enable Connection Pooling (if desired)
 #DATABASES['default']['ENGINE'] = 'django_postgrespool'
