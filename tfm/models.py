@@ -12,6 +12,7 @@ from django.db import models
 class Doctor(models.Model):
     specialization = models.CharField(max_length=100)
 
+
 class Patient(models.Model):
     MALE = 'M'
     FEMALE = 'F'
@@ -22,9 +23,12 @@ class Patient(models.Model):
 
     # TODO
     # photo
+    first_name = models.CharField(max_length=100, null=False)
+    last_name = models.CharField(max_length=200, null=False)
     description = models.TextField()
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     doctor = models.ForeignKey(Doctor)
+
 
 class TestResult(models.Model):
     SIMON_SAYS = "SS"

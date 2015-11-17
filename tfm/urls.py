@@ -9,8 +9,12 @@ urlpatterns = patterns('',
                        url(r'^$', views.index),
                        url(r'^registration/', views.registration),
                        url(r'^login/', views.user_login),
+                       url(r'^logout/', views.user_logout),
+
                        url(r'^accounts/login/$', views.user_login),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^accounts/', include('allauth.urls')),
                        url(r'^profile/', views.profile),
+                       url(r'^patients/$', views.patients),
+                       url(r'^patients/create', views.create_patient)
                        )

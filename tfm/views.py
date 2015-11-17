@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from forms import UserRegistrationForm, LoginForm
+from forms import UserRegistrationForm, LoginForm, CreatePatientForm
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 
 def index(request):
@@ -41,6 +41,23 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
+def patients(request):
+    return render(request, 'patients.html')
+
+
+def create_patient(request):
+    if request.method == 'POST':
+        form = CreatePatientForm(request.POST)
+    else:
+        form = CreatePatientForm()
+    return render(request, 'create_patient.html', {'form': form})
 
 
 @login_required

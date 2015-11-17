@@ -2,9 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <title>{% block title %}{% endblock title %}</title>
+
+    <script>
+        $(".dropdown-button").dropdown();
+    </script>
+
 </head>
 <body>
-
+{#Patients dropdown#}
+<ul id="patientsDropdown" class="dropdown-content">
+    <li><a href="/patients">Notifications</a></li>
+    <li><a href="/patients/create">Create</a></li>
+</ul>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo right">Hand Control Platform</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li>
+                <a href="#!" class="dropdown-button" data-activates="patientsDropdown">
+                    Patients
+                    <i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+            <li><a href="/logout">Log out</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    {% block content %}{% endblock content %}
+</div>
 </body>
 </html>

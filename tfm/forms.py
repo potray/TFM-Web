@@ -7,10 +7,6 @@ from django.contrib.auth.models import User
 
 
 class UserRegistrationForm(ModelForm):
-    # name = forms.CharField(label='Name', max_length=100)
-    # surname = forms.CharField(label='Surname', max_length=200)
-    # user_name = forms.CharField(label='User Name', max_length=50)
-    # user_password = forms.CharField(widget=forms.PasswordInput(), label='Password', max_length=50)
     password2 = forms.CharField(label=_("Confirm password"), widget=forms.PasswordInput)
 
     error_messages = {
@@ -66,3 +62,22 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
+
+
+class CreatePatientForm(ModelForm):
+
+
+    class Meta:
+        model = Patient
+        fields = '__all__'
+        widgets = {
+            'sex' : forms.RadioSelect,
+        }
+
+        labels = {
+            'Male' : '',
+            'M' : 'asd',
+            'sex' : 'asdasdasd',
+        }
+
+        exclude = ['doctor']
