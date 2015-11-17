@@ -17,10 +17,10 @@ def registration(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             # Hash the password.
+            print form.cleaned_data
             newUser = form.instance
-            print(newUser.password)
             newUser.password = make_password(newUser.password)
-            newUser.username = newUser.email
+            newUser.email = newUser.username
             newUser.save()
             return HttpResponseRedirect('/')
     else:
@@ -55,6 +55,14 @@ def patients(request):
 def create_patient(request):
     if request.method == 'POST':
         form = CreatePatientForm(request.POST)
+        if (form.is_valid()):
+            patient = form.instance
+            # Since we excluded the sex in the form we need to get in from request.POST.
+            patient.sex = request.POST['sex']
+            # The patient's doctor is the user
+            patient.doctor = request.user
+            patient.save()
+            return HttpResponseRedirect('/patients')
     else:
         form = CreatePatientForm()
     return render(request, 'create_patient.html', {'form': form})

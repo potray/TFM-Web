@@ -23,11 +23,11 @@ class Patient(models.Model):
 
     # TODO
     # photo
-    first_name = models.CharField(max_length=100, null=False)
-    last_name = models.CharField(max_length=200, null=False)
+    first_name = models.CharField(max_length=100, null=False, default='')
+    last_name = models.CharField(max_length=200, null=False, default='')
     description = models.TextField()
     sex = models.BooleanField(max_length=1, choices=SEX_CHOICES)
-    doctor = models.ForeignKey(Doctor)
+    doctor = models.ForeignKey(User)
 
 
 class TestResult(models.Model):

@@ -69,4 +69,5 @@ class CreatePatientForm(ModelForm):
     class Meta:
         model = Patient
         fields = '__all__'
+        # We exclude the sex because MaterializeCss has some problems rendering it.
         exclude = ('doctor', 'sex',)
