@@ -28,7 +28,7 @@ class Patient(models.Model):
     description = models.TextField()
     sex = models.BooleanField(max_length=1, choices=SEX_CHOICES)
     doctor = models.ForeignKey(User)
-
+    birth_date = models.DateField()
 
 class TestResult(models.Model):
     SIMON_SAYS = "SS"

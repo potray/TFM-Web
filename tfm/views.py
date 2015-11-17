@@ -1,9 +1,11 @@
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from datetime import datetime, timedelta, date
 from forms import UserRegistrationForm, LoginForm, CreatePatientForm
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth import login, logout
+from tfm.models import Patient
 
 
 def index(request):
@@ -48,10 +50,7 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
-def patients(request):
-    return render(request, 'patients.html')
-
-
+@login_required
 def create_patient(request):
     if request.method == 'POST':
         form = CreatePatientForm(request.POST)
@@ -61,11 +60,25 @@ def create_patient(request):
             patient.sex = request.POST['sex']
             # The patient's doctor is the user
             patient.doctor = request.user
+            date_string = request.POST['birth_date']
+            day = int(date_string[0:2])
+            month = int(date_string[3:5])
+            year = int(date_string[6:10])
+            birth_date = date(year, month, day)
+            patient.birth_date = birth_date
             patient.save()
             return HttpResponseRedirect('/patients')
     else:
         form = CreatePatientForm()
     return render(request, 'create_patient.html', {'form': form})
+
+@login_required
+def list_patients(request):
+    doctor_patients = Patient.objects.filter(doctor=request.user)
+    print(doctor_patients)
+    print(request.user)
+
+    return render(request, 'patients.html')
 
 
 @login_required

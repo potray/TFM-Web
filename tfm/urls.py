@@ -15,6 +15,6 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^accounts/', include('allauth.urls')),
                        url(r'^profile/', views.profile),
-                       url(r'^patients/$', views.patients),
+                       url(r'^patients/$', views.list_patients),
                        url(r'^patients/create', views.create_patient)
                        )
