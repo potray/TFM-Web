@@ -66,18 +66,7 @@ class LoginForm(forms.Form):
 
 class CreatePatientForm(ModelForm):
 
-
     class Meta:
         model = Patient
         fields = '__all__'
-        widgets = {
-            'sex' : forms.RadioSelect,
-        }
-
-        labels = {
-            'Male' : '',
-            'M' : 'asd',
-            'sex' : 'asdasdasd',
-        }
-
-        exclude = ['doctor']
+        exclude = ('doctor', 'sex',)

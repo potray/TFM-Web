@@ -6,6 +6,15 @@
     <form action="#" method="post">
         {% csrf_token %}
         {{ form }}
+        <label>Sex</label>
+        <p>
+            <input name="sex" type="radio" id="male" required checked>
+            <label for="male">Male</label>
+        </p>
+        <p>
+            <input name="sex" type="radio" id="female" required>
+            <label for="female">Female</label>
+        </p>
         <input type="submit" value="Submit" />
     </form>
 {% endblock content %}

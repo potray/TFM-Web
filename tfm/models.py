@@ -26,7 +26,7 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=100, null=False)
     last_name = models.CharField(max_length=200, null=False)
     description = models.TextField()
-    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+    sex = models.BooleanField(max_length=1, choices=SEX_CHOICES)
     doctor = models.ForeignKey(Doctor)
 
 
