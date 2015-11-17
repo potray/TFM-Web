@@ -1,16 +1,18 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
-class TfmUser(models.Model):
-    name = models.CharField(max_length=100, null=False)
-    surname = models.CharField(max_length=200, null=False)
-    email = models.EmailField(max_length=100, unique=True, primary_key=True, null=False)
-    password = models.CharField(max_length=50, null=False)
+# class TfmUser(models.Model):
+#     user = models.OneToOneField(User)
+#     # name = models.CharField(max_length=100, null=False)
+#     # surname = models.CharField(max_length=200, null=False)
+#     # email = models.EmailField(max_length=100, unique=True, primary_key=True, null=False)
+#     # password = models.CharField(max_length=50, null=False)
 
-class Doctor(TfmUser):
+class Doctor(models.Model):
     specialization = models.CharField(max_length=100)
 
-class Patient(TfmUser):
+class Patient(models.Model):
     MALE = 'M'
     FEMALE = 'F'
     SEX_CHOICES = (
