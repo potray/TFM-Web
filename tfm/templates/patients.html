@@ -3,6 +3,18 @@
 {% block title %}Patients{% endblock title %}
 
 {% block content %}
-    Patients!
+    <ul class="collection">
+        {% for patient in patients %}
+            <a href=#! class="collection-item">
+                <li class="collection-item avatar">
+{#                    TODO#}
+{#                    <img src= {{ patient.photo }} alt=" class="circle">#}
+                    <span class="title">{{ patient.last_name }}, {{ patient.first_name }}</span>
+                    <p>Code: {{ patient.code }}</p>
+                </li>
+            </a>
+        {% endfor %}
+    </ul>
+
 
 {% endblock content %}

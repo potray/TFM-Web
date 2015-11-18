@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from datetime import datetime, timedelta, date
 from forms import UserRegistrationForm, LoginForm, CreatePatientForm
@@ -60,6 +60,7 @@ def create_patient(request):
             patient.sex = request.POST['sex']
             # The patient's doctor is the user
             patient.doctor = request.user
+            # Create a date from the form info
             date_string = request.POST['birth_date']
             day = int(date_string[0:2])
             month = int(date_string[3:5])
@@ -72,15 +73,34 @@ def create_patient(request):
         form = CreatePatientForm()
     return render(request, 'create_patient.html', {'form': form})
 
+
 @login_required
 def list_patients(request):
-    doctor_patients = Patient.objects.filter(doctor=request.user)
-    print(doctor_patients)
-    print(request.user)
+    doctor_patients = Patient.objects.filter(doctor=request.user).order_by('last_name')
 
-    return render(request, 'patients.html')
+    for patient in doctor_patients:
+        patient.code = str(patient.id).zfill(6)
+
+    return render(request, 'patients.html', {'patients': doctor_patients})
 
 
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+def crossdomain(request):
+    return HttpResponse(open('crossdomain.xml').read())
+
+
+def validate_patient_code(request):
+    # Take off the zeros to the left.
+    code = int(request.GET['code'])
+    patient = Patient.objects.filter(id=code)
+    response = {}
+    if patient:
+        response['first_name'] = patient[0].first_name
+        response['last_name'] = patient[0].last_name
+        response['ok'] = True
+    else:
+        response['ok'] = False
+    return HttpResponse(response)
