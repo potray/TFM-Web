@@ -30,6 +30,7 @@ class Patient(models.Model):
     doctor = models.ForeignKey(User)
     birth_date = models.DateField()
 
+
 class TestResult(models.Model):
     SIMON_SAYS = "SS"
     STRAIGHT_LINE = "SL"

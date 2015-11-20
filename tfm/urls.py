@@ -16,7 +16,9 @@ urlpatterns = patterns('',
                        url(r'^accounts/', include('allauth.urls')),
                        url(r'^profile/', views.profile),
                        url(r'^patients/$', views.list_patients),
+                       url(r'^patients/patient', views.patient),
                        url(r'^patients/create', views.create_patient),
                        url(r'^patients/validateCode', views.validate_patient_code),
+                       url(r'^sendTestResult', views.send_test_result),
                        url(r'^crossdomain', views.crossdomain)
                        )

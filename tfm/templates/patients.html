@@ -5,7 +5,7 @@
 {% block content %}
     <ul class="collection">
         {% for patient in patients %}
-            <a href=#! class="collection-item">
+            <a href="patient?id={{ patient.id }}" class="collection-item">
                 <li class="collection-item avatar">
 {#                    TODO#}
 {#                    <img src= {{ patient.photo }} alt=" class="circle">#}

@@ -1,0 +1,269 @@
+{% extends "base_logged_in.html" %}
+{% block title %}{{ patient.last_name }}, {{ patient.first_name }}{% endblock title %}
+
+{% block content %}
+    <script>
+        $(function () {
+            $('#container').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Positions in X axes'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Position of thumb in x axis'
+                    }
+                },
+                series: [{
+                    name : 'Thumb',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in thumb_coords.0%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Index',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in index_coords.0%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Middle',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in middle_coords.0%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Ring',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in ring_coords.0%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Pinky',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in pinky_coords.0%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }]
+
+            });
+            $('#container1').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Positions in Y axes'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Position in y'
+                    }
+                },
+                series: [{
+                    name : 'Thumb',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in thumb_coords.1%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Index',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in index_coords.1%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Middle',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in middle_coords.1%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Ring',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in ring_coords.1%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Pinky',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in pinky_coords.1%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }]
+
+            });
+            $('#container2').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Positions in Z axes'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Position in z.'
+                    }
+                },
+                series: [{
+                    name : 'Thumb',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in thumb_coords.2%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Index',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in index_coords.2%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Middle',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in middle_coords.2%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Ring',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in ring_coords.2%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Pinky',
+                    data: [
+                        {% load multifor %}
+                        {% for time in times; val in pinky_coords.2%}
+                            [{{ time }}, {{ val }}]
+                            {# Don't add a colon if is the last one. #}
+                            {% if forloop.counter != forloop.last %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+
+                    ]
+                }]
+
+            });
+        })
+    </script>
+
+    <div id="container" style="width:100%; height:400px;"></div>
+    <div id="container1" style="width:100%; height:400px;"></div>
+    <div id="container2" style="width:100%; height:400px;"></div>
+
+{% endblock content %}
