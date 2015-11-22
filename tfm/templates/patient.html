@@ -3,6 +3,7 @@
 
 {% block content %}
     <script>
+
         $(function () {
             $('#container').highcharts({
                 chart: {
@@ -25,65 +26,42 @@
                 series: [{
                     name : 'Thumb',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in thumb_coords.0%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+
+                        {% for var in thumb_coords.0 %}
+                            {{ var }}
                         {% endfor %}
                     ]
                 }, {
                     name: 'Index',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in index_coords.0%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in index_coords.0 %}
+                            {{ var }}
                         {% endfor %}
 
                     ]
                 }, {
                     name: 'Middle',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in middle_coords.0%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in middle_coords.0 %}
+                            {{ var }}
                         {% endfor %}
+
 
                     ]
                 }, {
                     name: 'Ring',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in ring_coords.0%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in ring_coords.0 %}
+                            {{ var }}
                         {% endfor %}
-
                     ]
                 }, {
                     name: 'Pinky',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in pinky_coords.0%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in pinky_coords.0 %}
+                            {{ var }}
                         {% endfor %}
+
 
                     ]
                 }]
@@ -110,64 +88,37 @@
                 series: [{
                     name : 'Thumb',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in thumb_coords.1%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in thumb_coords.1 %}
+                            {{ var }}
                         {% endfor %}
                     ]
                 }, {
                     name: 'Index',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in index_coords.1%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in index_coords.1 %}
+                            {{ var }}
                         {% endfor %}
-
                     ]
                 }, {
                     name: 'Middle',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in middle_coords.1%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in middle_coords.1 %}
+                            {{ var }}
                         {% endfor %}
-
                     ]
                 }, {
                     name: 'Ring',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in ring_coords.1%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in ring_coords.1 %}
+                            {{ var }}
                         {% endfor %}
 
                     ]
                 }, {
                     name: 'Pinky',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in pinky_coords.1%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in pinky_coords.1 %}
+                            {{ var }}
                         {% endfor %}
 
                     ]
@@ -195,64 +146,37 @@
                 series: [{
                     name : 'Thumb',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in thumb_coords.2%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in thumb_coords.2 %}
+                            {{ var }}
                         {% endfor %}
                     ]
                 }, {
                     name: 'Index',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in index_coords.2%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in index_coords.2 %}
+                            {{ var }}
                         {% endfor %}
-
                     ]
                 }, {
                     name: 'Middle',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in middle_coords.2%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in middle_coords.2 %}
+                            {{ var }}
                         {% endfor %}
-
                     ]
                 }, {
                     name: 'Ring',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in ring_coords.2%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in ring.2 %}
+                            {{ var }}
                         {% endfor %}
 
                     ]
                 }, {
                     name: 'Pinky',
                     data: [
-                        {% load multifor %}
-                        {% for time in times; val in pinky_coords.2%}
-                            [{{ time }}, {{ val }}]
-                            {# Don't add a colon if is the last one. #}
-                            {% if forloop.counter != forloop.last %}
-                                ,
-                            {% endif %}
+                        {% for var in pinky_coords.2 %}
+                            {{ var }}
                         {% endfor %}
 
                     ]

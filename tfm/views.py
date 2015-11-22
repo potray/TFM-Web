@@ -136,12 +136,23 @@ def patient(request):
     for i in range (0, test_json['times'].keys().__len__()):
         # In each iteration we add either a x, y or z coord.
         for j in range(0, coordinates.__len__()):
+            # Add a "[<time>, <position in axis>]," string to each array.
             coordinate = coordinates[j]
-            thumb_coords[j].append(float(test_json['thumb'][coordinate][str(i)]))
-            index_coords[j].append(float(test_json['index'][coordinate][str(i)]))
-            middle_coords[j].append(float(test_json['middle'][coordinate][str(i)]))
-            ring_coords[j].append(float(test_json['ring'][coordinate][str(i)]))
-            pinky_coords[j].append(float(test_json['pinky'][coordinate][str(i)]))
+            thumb_coords[j].append("[" + test_json['times'][str(i)] + ", " + test_json['thumb'][coordinate][str(i)] + "]")
+            index_coords[j].append("[" + test_json['times'][str(i)] + ", " + test_json['index'][coordinate][str(i)] + "]")
+            middle_coords[j].append("[" + test_json['times'][str(i)] + ", " + test_json['middle'][coordinate][str(i)] + "]")
+            ring_coords[j].append("[" + test_json['times'][str(i)] + ", " + test_json['ring'][coordinate][str(i)] + "]")
+            pinky_coords[j].append("[" + test_json['times'][str(i)] + ", " + test_json['pinky'][coordinate][str(i)] + "]")
+            if i != test_json['times'].keys().__len__():
+                thumb_coords[j].append(",")
+                index_coords[j].append(",")
+                middle_coords[j].append(",")
+                ring_coords[j].append(",")
+                pinky_coords[j].append(",")
+            # index_coords[j].append(float(test_json['index'][coordinate][str(i)]))
+            # middle_coords[j].append(float(test_json['middle'][coordinate][str(i)]))
+            # ring_coords[j].append(float(test_json['ring'][coordinate][str(i)]))
+            # pinky_coords[j].append(float(test_json['pinky'][coordinate][str(i)]))
         times.append(float(test_json['times'][str(i)]))
 
 
