@@ -90,7 +90,7 @@ def list_patients(request):
 
 @login_required
 def notifications(request):
-    return render(request, 'profile.html')
+    return render(request, 'notifications.html')
 
 
 def crossdomain(request):
