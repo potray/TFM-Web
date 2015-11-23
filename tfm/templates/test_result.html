@@ -1,0 +1,195 @@
+{% extends "base_logged_in.html" %}
+{% block title %}Test result{% endblock title %}
+
+{% block content %}
+    <h3>Patient: {{ patient.last_name }},  {{ patient.first_name }} </h3>
+    <h4>Test date: {{ test.date }}</h4>
+
+    <script>
+
+        $(function () {
+            $('#container').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Positions in X axes'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time in seconds'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Position in x axis'
+                    }
+                },
+                series: [{
+                    name : 'Thumb',
+                    data: [
+
+                        {% for var in thumb_coords.0 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Index',
+                    data: [
+                        {% for var in index_coords.0 %}
+                            {{ var }}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Middle',
+                    data: [
+                        {% for var in middle_coords.0 %}
+                            {{ var }}
+                        {% endfor %}
+
+
+                    ]
+                }, {
+                    name: 'Ring',
+                    data: [
+                        {% for var in ring_coords.0 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Pinky',
+                    data: [
+                        {% for var in pinky_coords.0 %}
+                            {{ var }}
+                        {% endfor %}
+
+
+                    ]
+                }]
+
+            });
+            $('#container1').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Positions in Y axes'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time in seconds'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Position in y'
+                    }
+                },
+                series: [{
+                    name : 'Thumb',
+                    data: [
+                        {% for var in thumb_coords.1 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Index',
+                    data: [
+                        {% for var in index_coords.1 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Middle',
+                    data: [
+                        {% for var in middle_coords.1 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Ring',
+                    data: [
+                        {% for var in ring_coords.1 %}
+                            {{ var }}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Pinky',
+                    data: [
+                        {% for var in pinky_coords.1 %}
+                            {{ var }}
+                        {% endfor %}
+
+                    ]
+                }]
+
+            });
+            $('#container2').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Positions in Z axes'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time in seconds'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Position in z.'
+                    }
+                },
+                series: [{
+                    name : 'Thumb',
+                    data: [
+                        {% for var in thumb_coords.2 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Index',
+                    data: [
+                        {% for var in index_coords.2 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Middle',
+                    data: [
+                        {% for var in middle_coords.2 %}
+                            {{ var }}
+                        {% endfor %}
+                    ]
+                }, {
+                    name: 'Ring',
+                    data: [
+                        {% for var in ring_coords.2 %}
+                            {{ var }}
+                        {% endfor %}
+
+                    ]
+                }, {
+                    name: 'Pinky',
+                    data: [
+                        {% for var in pinky_coords.2 %}
+                            {{ var }}
+                        {% endfor %}
+
+                    ]
+                }]
+
+            });
+        })
+    </script>
+
+    <div id="container" style="width:100%; height:400px;"></div>
+    <div id="container1" style="width:100%; height:400px;"></div>
+    <div id="container2" style="width:100%; height:400px;"></div>
+{% endblock %}

@@ -64,9 +64,7 @@ class LoginForm(forms.Form):
         return user
 
 
-
 class CreatePatientForm(ModelForm):
-
     class Meta:
         model = Patient
         fields = '__all__'
