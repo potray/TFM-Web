@@ -13,7 +13,7 @@ import json
 
 def index(request):
     if request.user.is_authenticated():
-        return profile(request)
+        return notifications(request)
     return render(request, 'index.html')
 
 
@@ -89,7 +89,7 @@ def list_patients(request):
 
 
 @login_required
-def profile(request):
+def notifications(request):
     return render(request, 'profile.html')
 
 
@@ -152,16 +152,15 @@ def test_result(request):
             # Add a "[<time>, <position in axis>]," string to each array.
             coordinate = coordinates[j]
             thumb_coords[j].append(
-                "[" + test_json['times'][str(i)] + ", " + str(float(test_json['thumb'][coordinate][str(i)]) / 10) + "]")
+                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['thumb'][coordinate][str(i)]) / 10) + ']')
             index_coords[j].append(
-                "[" + test_json['times'][str(i)] + ", " + str(float(test_json['index'][coordinate][str(i)]) / 10) + "]")
+                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['index'][coordinate][str(i)]) / 10) + ']')
             middle_coords[j].append(
-                "[" + test_json['times'][str(i)] + ", " + str(
-                    float(test_json['middle'][coordinate][str(i)]) / 10) + "]")
+                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['middle'][coordinate][str(i)]) / 10) + ']')
             ring_coords[j].append(
-                "[" + test_json['times'][str(i)] + ", " + str(float(test_json['ring'][coordinate][str(i)]) / 10) + "]")
+                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['ring'][coordinate][str(i)]) / 10) + ']')
             pinky_coords[j].append(
-                "[" + test_json['times'][str(i)] + ", " + str(float(test_json['pinky'][coordinate][str(i)]) / 10) + "]")
+                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['pinky'][coordinate][str(i)]) / 10) + ']')
             if i != test_json['times'].keys().__len__():
                 thumb_coords[j].append(",")
                 index_coords[j].append(",")
