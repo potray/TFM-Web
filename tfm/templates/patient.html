@@ -3,6 +3,7 @@
 
 {% block content %}
     <h4>{{ patient.last_name }}, {{ patient.first_name }}</h4>
+    <img src="{{ patient.photo.url }}" width="200px">
     <form action="#" method="POST">
         {% csrf_token %}
         <h5>History</h5>
@@ -24,6 +25,8 @@
                     <p><b>Date: </b>{{ test_result.date }}</p>
                 </li>
             </a>
+        {% empty %}
+            <li>This patient hasn't realized any tests.</li>
         {% endfor %}
     </ul>
 

@@ -7,8 +7,7 @@
         {% for patient in patients %}
             <a href="patient?id={{ patient.id }}" class="collection-item">
                 <li class="collection-item avatar">
-{#                    TODO#}
-{#                    <img src= {{ patient.photo }} alt=" class="circle">#}
+                    <img src="{{ MEDIA_URL }}{{ patient.photo.url }}" alt="" class="circle">
                     <span class="title">{{ patient.last_name }}, {{ patient.first_name }}</span>
                     <p>Code: {{ patient.code }}</p>
                 </li>

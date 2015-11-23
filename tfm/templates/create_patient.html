@@ -14,9 +14,10 @@
             });
         });
     </script>
-    <form action="#" method="post">
+    <form action="#" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
+        <br>
         <label>Sex</label>
         <p>
             <input name="sex" type="radio" id="male" value="M" required checked>
@@ -26,7 +27,8 @@
             <input name="sex" type="radio" id="female" value="F" required>
             <label for="female">Female</label>
         </p>
-        <input type="date" class="datepicker" name="birth_date" required>
+        <label>Birth date</label>
+        <input type="date" class="datepicker" name="birth_date" required placeholder="Click to select date">
         <input type="submit" value="Submit" />
     </form>
 {% endblock content %}

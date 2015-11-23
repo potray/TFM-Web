@@ -57,8 +57,8 @@ def user_logout(request):
 @login_required
 def create_patient(request):
     if request.method == 'POST':
-        form = CreatePatientForm(request.POST)
-        if (form.is_valid()):
+        form = CreatePatientForm(request.POST, request.FILES)
+        if form.is_valid():
             patient = form.instance
             # Since we excluded the sex in the form we need to get in from request.POST.
             patient.sex = request.POST['sex']
