@@ -23,7 +23,7 @@ class Patient(models.Model):
 
     first_name = models.CharField(max_length=100, null=False, default='')
     last_name = models.CharField(max_length=200, null=False, default='')
-    description = models.TextField()
+    history = models.TextField()
     sex = models.BooleanField(max_length=1, choices=SEX_CHOICES)
     doctor = models.ForeignKey(User)
     birth_date = models.DateField()

@@ -68,5 +68,8 @@ class CreatePatientForm(ModelForm):
     class Meta:
         model = Patient
         fields = '__all__'
+        widgets = {
+            'history': forms.Textarea(attrs={'class': 'materialize-textarea', })
+        }
         # We exclude the sex because MaterializeCss has some problems rendering it.
         exclude = ('doctor', 'sex', 'birth_date')
