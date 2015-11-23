@@ -20,7 +20,7 @@
     <ul class="collection">
         {% for test_result in test_results %}
             <a href="testResult?id={{ test_result.id }}" class="collection-item">
-                <li class="collection-item avatar">
+                <li class="collection-item">
                     <span class="title"><b>Type:</b> {{ test_result.get_test_type_display}}</span>
                     <p><b>Date: </b>{{ test_result.date }}</p>
                 </li>

@@ -4,6 +4,7 @@
 {% block content %}
     <h3>Patient: {{ patient.last_name }},  {{ patient.first_name }} </h3>
     <h4>Test date: {{ test.date }}</h4>
+    <h4>Type: {{ test.get_test_type_display }}</h4>
 
     <script>
 

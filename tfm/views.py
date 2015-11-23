@@ -90,7 +90,16 @@ def list_patients(request):
 
 @login_required
 def notifications(request):
-    return render(request, 'notifications.html')
+    # Get all unread notifications.
+    unread_notifications = TestResult.objects.filter(is_new=True)
+
+    # Filter by doctor.
+    filtered_notifications = []
+    for notification in unread_notifications:
+        if notification.patient.doctor == request.user:
+            filtered_notifications.append(notification)
+
+    return render(request, 'notifications.html', {'notifications': filtered_notifications})
 
 
 def crossdomain(request):
@@ -135,6 +144,11 @@ def patient(request):
 def test_result(request):
     test_id = request.GET['id']
     test = TestResult.objects.filter(id=test_id).first()
+
+    # If the doctor acceded it then it isn't new.
+    if test.is_new:
+        test.is_new = False
+        test.save()
 
     # Since the fingers and the times aren't sorted it's necessary to do it this way.
     coordinates = ['x', 'y', 'z']

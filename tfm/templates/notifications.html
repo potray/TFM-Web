@@ -5,5 +5,19 @@
 {% block content %}
     <h3>Welcome, {{ user.first_name }} {{ user.last_name }}</h3>
 
-    <h2>TODO EVENTS, this was deployed via github. AUtomatically.</h2>
+    <h5>Unread notifications:</h5>
+
+    <ul class="collection">
+        {% for notification in notifications %}
+            <a href="/patients/testResult?id={{ notification.id }}" class="collection-item">
+                <li class="collection-item">
+                    <span class="title"><b>Type:</b> {{ notification.get_test_type_display}}</span>
+                    <p><b>Patient: </b>{{ notification.patient.last_name }}, {{ notification.patient.first_name }} </p>
+                    <p><b>Date: </b>{{ notification.date }}</p>
+                </li>
+            </a>
+        {% empty %}
+            <li>No unread notifications.</li>
+        {% endfor %}
+    </ul>
 {% endblock content %}
