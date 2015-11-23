@@ -21,7 +21,6 @@ class Patient(models.Model):
         (FEMALE, 'Female'),
     )
 
-    # TODO
     first_name = models.CharField(max_length=100, null=False, default='')
     last_name = models.CharField(max_length=200, null=False, default='')
     description = models.TextField()

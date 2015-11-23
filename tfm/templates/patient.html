@@ -3,17 +3,20 @@
 
 {% block content %}
     <h4>{{ patient.last_name }}, {{ patient.first_name }}</h4>
+
     <img src="{{ patient.photo.url }}" width="200px">
     <form action="#" method="POST">
         {% csrf_token %}
         <h5>History</h5>
         <br>
+
         <div class=row>
             <div class="input-field">
-                <textarea id="history" name="history" class="materialize-textarea" placeholder="">{{ patient.description }}</textarea>
+                <textarea id="history" name="history" class="materialize-textarea"
+                          placeholder="">{{ patient.description }}</textarea>
                 <label for=history class="active">Click to edit.</label>
             </div>
-            <input type="submit" value="Save">
+            <input type="submit" value="Save" class="btn waves-effect waves-light">
         </div>
     </form>
     <h4>Tests</h4>
@@ -21,7 +24,8 @@
         {% for test_result in test_results %}
             <a href="testResult?id={{ test_result.id }}" class="collection-item">
                 <li class="collection-item">
-                    <span class="title"><b>Type:</b> {{ test_result.get_test_type_display}}</span>
+                    <span class="title"><b>Type:</b> {{ test_result.get_test_type_display }}</span>
+
                     <p><b>Date: </b>{{ test_result.date }}</p>
                 </li>
             </a>
@@ -29,5 +33,16 @@
             <li>This patient hasn't realized any tests.</li>
         {% endfor %}
     </ul>
+
+
+    <form action="/patients/" method="POST" onsubmit="return confirm('Do you really want to delete this patient?');">
+        {% csrf_token %}
+        <div class=row>
+            <div class="input-field">
+                <input type="hidden" value="{{ patient.id }}" name="patient_id">
+                <input type=submit value="Delete patient" class="btn waves-effect waves-light red">
+            </div>
+        </div>
+    </form>
 
 {% endblock content %}

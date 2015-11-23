@@ -80,6 +80,12 @@ def create_patient(request):
 
 @login_required
 def list_patients(request):
+    if request.method == 'POST':
+        # The doctor deleted a patient
+        patient = Patient.objects.filter(id=request.POST['patient_id']).first()
+        patient.delete()
+
+
     doctor_patients = Patient.objects.filter(doctor=request.user).order_by('last_name')
 
     for patient in doctor_patients:
