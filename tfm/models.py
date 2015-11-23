@@ -28,7 +28,7 @@ class Patient(models.Model):
     sex = models.BooleanField(max_length=1, choices=SEX_CHOICES)
     doctor = models.ForeignKey(User)
     birth_date = models.DateField()
-    photo = models.ImageField(upload_to='photos', )
+    photo = models.ImageField(upload_to='photos')
 
 
 class TestResult(models.Model):
@@ -42,3 +42,4 @@ class TestResult(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient)
     result = models.TextField()
+    is_new = models.BooleanField(default=True)
