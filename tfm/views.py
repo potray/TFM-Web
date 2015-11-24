@@ -60,39 +60,53 @@ def create_patient(request):
     if request.method == 'POST':
         form = CreatePatientForm(request.POST, request.FILES)
         if form.is_valid():
-            patient = form.instance
-            # If editing, get the previous patient.
+
             if request.POST.get('update') is not None:
+                # Editing
                 previous_patient = Patient.objects.filter(id=request.POST['update']).first()
-            # Since we excluded the sex in the form we need to get in from request.POST.
-            if request.POST['sex'] == 'M':
-                patient.sex = True
+                previous_patient.first_name = request.POST['first_name']
+                previous_patient.last_name = request.POST['last_name']
+                previous_patient.history = request.POST['history']
+
+                if request.POST['sex'] == 'M':
+                    previous_patient.sex = True
+                else:
+                    previous_patient.sex = False
+
+                date_string = request.POST['birth_date']
+                try:
+                    day = int(date_string[0:2])
+                    month = int(date_string[3:5])
+                    year = int(date_string[6:10])
+                    birth_date = date(year, month, day)
+                    previous_patient.birth_date = birth_date
+                except:
+                    # Date didn't change.
+                    previous_patient.birth_date = previous_patient.birth_date
+
+                if request.FILES.get('photo') is not None:
+                    # Change the photo
+                    previous_patient.photo = request.FILES.get('photo')
+
+                previous_patient.save()
             else:
-                patient.sex = False
-            # The patient's doctor is the user
-            patient.doctor = request.user
-            # Create a date from the form info
-            date_string = request.POST['birth_date']
-            try:
+                patient = form.instance
+                # Since we excluded the sex in the form we need to get in from request.POST.
+                if request.POST['sex'] == 'M':
+                    patient.sex = True
+                else:
+                    patient.sex = False
+                # The patient's doctor is the user
+                patient.doctor = request.user
+                # Create a date from the form info
+                date_string = request.POST['birth_date']
                 day = int(date_string[0:2])
                 month = int(date_string[3:5])
                 year = int(date_string[6:10])
                 birth_date = date(year, month, day)
                 patient.birth_date = birth_date
-            except:
-                # Date didn't change.
-                patient.birth_date = previous_patient.birth_date
 
-            if request.FILES.get('photo') is None and request.POST.get('update') is not None:
-                # Photo didn't change
-                patient.photo = previous_patient.photo
-
-
-            # Replace the previous patient if there is an update.
-            if request.POST.get('update') is not None:
-                patient.id = previous_patient.id
-                previous_patient.delete()
-            patient.save()
+                patient.save()
             return HttpResponseRedirect('/patients')
     else:
         form = CreatePatientForm()
@@ -100,7 +114,7 @@ def create_patient(request):
             # Edit patient.
             patient = Patient.objects.filter(id=request.GET['id']).first()
             attrs['patient'] = patient
-            # Prefill the fields.
+            # Prefill the text fields.
             form.fields['first_name'].initial = patient.first_name
             form.fields['last_name'].initial = patient.last_name
             form.fields['history'].initial = patient.history
