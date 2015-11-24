@@ -16,19 +16,40 @@
     </script>
     <form action="#" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {% if patient %}
+            <input type=hidden name='update' value={{ patient.id }}>
+        {% endif %}
         {{ form }}
         <br>
-        <label>Sex</label>
-        <p>
-            <input name="sex" type="radio" id="male" value="M" required checked>
-            <label for="male">Male</label>
-        </p>
-        <p>
-            <input name="sex" type="radio" id="female" value="F" required>
-            <label for="female">Female</label>
-        </p>
-        <label>Birth date</label>
-        <input type="date" class="datepicker" name="birth_date" required placeholder="Click to select date">
-        <input type="submit" value="Create" class="btn waves-effect waves-light" />
+        <label>Sex:</label>
+        {% if patient.sex != False %}
+            <p>
+                <input name="sex" type="radio" id="male" value="M" required checked>
+                <label for="male">Male</label>
+            </p>
+            <p>
+                <input name="sex" type="radio" id="female" value="F" required>
+                <label for="female">Female</label>
+            </p>
+        {% else %}
+            <p>
+                <input name="sex" type="radio" id="male" value="M" required>
+                <label for="male">Male</label>
+            </p>
+            <p>
+                <input name="sex" type="radio" id="female" value="F" required checked>
+                <label for="female">Female</label>
+            </p>
+        {% endif %}
+
+        <label>Birth date:</label>
+        <input type="date" class="datepicker" name="birth_date" required placeholder="Click to select date" value="{{ patient.birth_date }}">
+        <button type=submit class="btn waves-effect waves-light">
+            {% if patient %}
+                Save
+            {% else %}
+                Create
+            {% endif %}
+        </button>
     </form>
 {% endblock content %}

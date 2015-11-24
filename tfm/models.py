@@ -17,8 +17,8 @@ class Patient(models.Model):
     MALE = 'M'
     FEMALE = 'F'
     SEX_CHOICES = (
-        (MALE, 'Male'),
-        (FEMALE, 'Female'),
+        (True, 'Male'),
+        (False, 'Female'),
     )
 
     first_name = models.CharField(max_length=100, null=False, default='')
@@ -27,7 +27,7 @@ class Patient(models.Model):
     sex = models.BooleanField(max_length=1, choices=SEX_CHOICES)
     doctor = models.ForeignKey(User)
     birth_date = models.DateField()
-    photo = models.ImageField(upload_to='photos')
+    photo = models.ImageField(upload_to='photos', blank=True, default='photos/default.png')
 
 
 class TestResult(models.Model):

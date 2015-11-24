@@ -34,7 +34,11 @@
         {% endfor %}
     </ul>
 
-
+    <div class=row>
+        <div class="input-field">
+            <a class="btn waves-effect waves-light" href="/patients/create?id={{ patient.id }}">Edit Patient</a>
+        </div>
+    </div>
     <form action="/patients/" method="POST" onsubmit="return confirm('Do you really want to delete this patient?');">
         {% csrf_token %}
         <div class=row>
