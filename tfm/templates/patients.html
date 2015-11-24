@@ -12,6 +12,8 @@
                     <p>Code: {{ patient.code }}</p>
                 </li>
             </a>
+        {% empty %}
+            <li>You have no patients yet.</li>
         {% endfor %}
     </ul>
 

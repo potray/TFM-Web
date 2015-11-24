@@ -40,7 +40,7 @@ def user_login(request):
             user = form.login(request)
             if user:
                 login(request, user)
-                return HttpResponseRedirect('/profile')
+                return HttpResponseRedirect('/notifications')
             else:
                 print"no"
     else:
