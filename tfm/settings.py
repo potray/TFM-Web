@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "@j-6&4akqr&08zudo9ogeiyx5^+waae4$!j$zbn7^4jkc!g*vz"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -158,43 +158,43 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # Amazon S3 settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-AWS_ACCESS_KEY_ID = 'AKIAII3HFWRXLJ2OMC5Q'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'tfmheroku'
-STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-import sys
-import urlparse
-
-# Register database schemes in URLs.
-urlparse.uses_netloc.append('postgres')
-urlparse.uses_netloc.append('mysql')
-
-try:
-    if 'DATABASES' not in locals():
-        DATABASES = {}
-
-    if 'DATABASE_URL' in os.environ:
-        url = urlparse.urlparse(os.environ['DATABASE_URL'])
-
-        # Ensure default database exists.
-        DATABASES['default'] = DATABASES.get('default', {})
-
-        # Update with environment configuration.
-        DATABASES['default'].update({
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port,
-        })
-        if url.scheme == 'postgres':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-
-        if url.scheme == 'mysql':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-except Exception:
-    print 'Unexpected error:', sys.exc_info()
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+# AWS_ACCESS_KEY_ID = 'AKIAII3HFWRXLJ2OMC5Q'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'tfmheroku'
+# STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+#
+# import sys
+# import urlparse
+#
+# # Register database schemes in URLs.
+# urlparse.uses_netloc.append('postgres')
+# urlparse.uses_netloc.append('mysql')
+#
+# try:
+#     if 'DATABASES' not in locals():
+#         DATABASES = {}
+#
+#     if 'DATABASE_URL' in os.environ:
+#         url = urlparse.urlparse(os.environ['DATABASE_URL'])
+#
+#         # Ensure default database exists.
+#         DATABASES['default'] = DATABASES.get('default', {})
+#
+#         # Update with environment configuration.
+#         DATABASES['default'].update({
+#             'NAME': url.path[1:],
+#             'USER': url.username,
+#             'PASSWORD': url.password,
+#             'HOST': url.hostname,
+#             'PORT': url.port,
+#         })
+#         if url.scheme == 'postgres':
+#             DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+#
+#         if url.scheme == 'mysql':
+#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+# except Exception:
+#     print 'Unexpected error:', sys.exc_info()
