@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "@j-6&4akqr&08zudo9ogeiyx5^+waae4$!j$zbn7^4jkc!g*vz"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
     'tfm',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,9 +126,8 @@ ALLOWED_HOSTS = ['*']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 MEDIA_ROOT_DIR = 'media'
 MEDIA_ROOT = normpath(join(BASE_DIR, MEDIA_ROOT_DIR))
 MEDIA_URL = '/media/'
@@ -158,13 +158,13 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # Amazon S3 settings
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-# STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-# AWS_ACCESS_KEY_ID = 'AKIAII3HFWRXLJ2OMC5Q'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'tfmheroku'
-# STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+AWS_ACCESS_KEY_ID = 'AKIAII3HFWRXLJ2OMC5Q'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'tfmheroku'
+STATIC_URL = 'http://s3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME + '/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 #
 # import sys
 # import urlparse

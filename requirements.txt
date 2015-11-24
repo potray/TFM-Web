@@ -7,6 +7,5 @@ SQLAlchemy==1.0.4
 whitenoise==2.0.2
 django-allauth
 pillow
-psycopg2
 boto
 django-storages
