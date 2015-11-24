@@ -83,9 +83,10 @@ def create_patient(request):
                 # Date didn't change.
                 patient.birth_date = previous_patient.birth_date
 
-            if request.FILES['photo'] is None:
+            if request.FILES.get('photo') is None and request.POST.get('update') is not None:
                 # Photo didn't change
                 patient.photo = previous_patient.photo
+
 
             # Replace the previous patient if there is an update.
             if request.POST.get('update') is not None:
