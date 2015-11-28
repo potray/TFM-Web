@@ -1,6 +1,8 @@
 {% extends "base_logged_in.html" %}
 {% block title %}{{ patient.last_name }}, {{ patient.first_name }}{% endblock title %}
-
+{% block breadcrumbs %}
+<a class='breadcrumb'>{{ patient.last_name }}, {{ patient.first_name }}</a>
+{% endblock %}
 {% block content %}
     <h4>{{ patient.last_name }}, {{ patient.first_name }}</h4>
 

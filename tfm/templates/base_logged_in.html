@@ -26,7 +26,6 @@
 </ul>
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo right">Hand Control Platform</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li>
                 <a href="#!" class="dropdown-button" data-activates="patientsDropdown">
@@ -34,7 +33,11 @@
                     <i class="material-icons right">arrow_drop_down</i>
                 </a>
             </li>
+        </ul>
+        {% block breadcrumbs %}{% endblock %}
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/logout">Log out</a></li>
+            <a href="#" class="brand-logo center">Hand Control Platform</a>
         </ul>
     </div>
 </nav>

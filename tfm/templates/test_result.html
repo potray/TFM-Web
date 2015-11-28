@@ -1,5 +1,9 @@
 {% extends "base_logged_in.html" %}
 {% block title %}Test result{% endblock title %}
+{% block breadcrumbs %}
+    <a href='/patients/patient?id={{ patient.id }}' class='breadcrumb'>{{ patient.last_name }}, {{ patient.first_name }}</a>
+    <a class='breadcrumb'>{{test.date}} -> {{  test.get_test_type_display }}</a>
+{% endblock %}
 
 {% block content %}
     <h3>Patient: {{ patient.last_name }}, {{ patient.first_name }} </h3>
