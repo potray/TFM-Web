@@ -13,8 +13,6 @@
     <h6>Draw a square in an area to zoom in, shift+click to pan.</h6>
 
     <script>
-
-
         $(function () {
             (function (H) {
                 H.wrap(H.Chart.prototype, 'pan', function (proceed) {
@@ -158,10 +156,6 @@
             }, function (chart) {
                 chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();
             });
-
-            // Create the chart
-
-
             $('#container1').highcharts({
                 chart: {
                     type: 'line',
@@ -338,8 +332,6 @@
             });
         })
     </script>
-
-    <div id='test'></div>
 
     <div id="container1" style="width:100%; height:400px;"></div>
     <div id="container" style="width:100%; height:400px;"></div>

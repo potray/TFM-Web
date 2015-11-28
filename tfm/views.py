@@ -183,7 +183,7 @@ def patient(request):
         patient_object.save()
 
     # Get test results
-    test_results = TestResult.objects.filter(patient=patient_object)
+    test_results = TestResult.objects.filter(patient=patient_object).order_by('-date')
 
     return render(request, 'patient.html', {'patient': patient_object,
                                             'test_results': test_results,
