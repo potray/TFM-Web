@@ -2,19 +2,96 @@
 {% block title %}Test result{% endblock title %}
 
 {% block content %}
-    <h3>Patient: {{ patient.last_name }},  {{ patient.first_name }} </h3>
+    <h3>Patient: {{ patient.last_name }}, {{ patient.first_name }} </h3>
     <h4>Test date: {{ test.date }}</h4>
     <h4>Type: {{ test.get_test_type_display }}</h4>
 
-    <h6>Draw a square in an area to zoom in.</h6>
+    <h6>Draw a square in an area to zoom in, shift+click to pan.</h6>
 
     <script>
 
+
         $(function () {
+            (function (H) {
+                H.wrap(H.Chart.prototype, 'pan', function (proceed) {
+                    var chart = this,
+                            hoverPoints = chart.hoverPoints,
+                            doRedraw,
+                            e = arguments[1],
+                            each = H.each;
+
+                    // remove active points for shared tooltip
+                    if (hoverPoints) {
+                        each(hoverPoints, function (point) {
+                            point.setState();
+                        });
+                    }
+
+                    var mousePosX = e.chartX,
+                            mousePosY = e.chartY,
+                            xAxis = chart.xAxis[0],
+                            yAxis = chart.yAxis[0],
+                            startPosX = chart.mouseDownX,
+                            startPosY = chart.mouseDownY,
+                            halfPointRangeX = (xAxis.pointRange || 0) / 2,
+                            halfPointRangeY = (yAxis.pointRange || 0) / 2,
+                            extremesX = xAxis.getExtremes(),
+                            newMinX = xAxis.toValue(startPosX - mousePosX, true) + halfPointRangeX,
+                            newMaxX = xAxis.toValue(startPosX + chart.plotWidth - mousePosX, true) - halfPointRangeX,
+                            extremesY = yAxis.startingExtremes,
+                            newMaxY = yAxis.toValue(startPosY - mousePosY, true) + halfPointRangeY,
+                            newMinY = yAxis.toValue(startPosY + chart.plotHeight - mousePosY, true) - halfPointRangeY;
+
+                    if (xAxis.series.length && newMinX > Math.min(extremesX.dataMin, extremesX.min) && newMaxX < Math.max(extremesX.dataMax, extremesX.max) && newMinY > Math.min(extremesY.dataMin, extremesY.min) && newMaxY < Math.max(extremesY.dataMax, extremesY.max)) {
+                        xAxis.setExtremes(newMinX, newMaxX, false, false, {
+                            trigger: 'pan'
+                        });
+                        yAxis.setExtremes(newMinY, newMaxY, false, false, {
+                            trigger: 'pan'
+                        });
+                        doRedraw = true;
+                    }
+
+                    chart.mouseDownX = mousePosX;
+                    chart.mouseDownY = mousePosY;// set new reference for next run
+
+                    if (doRedraw) {
+                        chart.redraw(false);
+                    }
+                });
+
+            }(Highcharts));
+
+
             $('#container').highcharts({
                 chart: {
                     type: 'line',
-                    zoomType: 'xy'
+                    zoomType: 'xy',
+                    panning: true,
+                    panKey: 'shift',
+                    events: {
+                        selection: function (event) {
+                            if (event.xAxis || event.yAxis) {
+                                // Zoom in every chart.
+                                var chartY = $('#container1').highcharts();
+                                var chartZ = $('#container2').highcharts();
+                                chartY.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+{#                                chartY.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                chartY.showResetZoom();
+                                chartZ.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+{#                                chartZ.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                chartZ.showResetZoom();
+                            } else {
+                                // Zoom out every chart.
+                                var chartY = $('#container1').highcharts();
+                                var chartZ = $('#container2').highcharts();
+                                chartY.xAxis[0].setExtremes(null, null);
+                                chartY.yAxis[0].setExtremes(null, null);
+                                chartZ.xAxis[0].setExtremes(null, null);
+                                chartZ.yAxis[0].setExtremes(null, null);
+                            }
+                        }
+                    }
                 },
                 title: {
                     text: 'Positions in X axes'
@@ -25,12 +102,14 @@
                     },
                 },
                 yAxis: {
+                    startOnTick: false,
+                    endOnTick: false,
                     title: {
                         text: 'Position in x axis'
                     }
                 },
                 series: [{
-                    name : 'Thumb',
+                    name: 'Thumb',
                     data: [
 
                         {% for var in thumb_coords.0 %}
@@ -72,11 +151,42 @@
                     ]
                 }]
 
+            }, function (chart) {
+                chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();
             });
+
+            // Create the chart
+
+
             $('#container1').highcharts({
                 chart: {
                     type: 'line',
-                    zoomType: 'xy'
+                    zoomType: 'xy',
+                    panning: true,
+                    panKey: 'shift',
+                    events: {
+                        selection: function (event) {
+                            if (event.xAxis || event.yAxis) {
+                                // Zoom in every chart.
+                                var chartX = $('#container').highcharts();
+                                var chartZ = $('#container2').highcharts();
+                                chartX.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+                                {#                                chartX.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                chartX.showResetZoom();
+                                chartZ.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+                                {#                                chartZ.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                chartZ.showResetZoom();
+                            } else {
+                                // Zoom out every chart.
+                                var chartX = $('#container').highcharts();
+                                var chartZ = $('#container2').highcharts();
+                                chartX.xAxis[0].setExtremes(null, null);
+                                chartX.yAxis[0].setExtremes(null, null);
+                                chartZ.xAxis[0].setExtremes(null, null);
+                                chartZ.yAxis[0].setExtremes(null, null);
+                            }
+                        }
+                    }
                 },
                 title: {
                     text: 'Positions in Y axes'
@@ -92,7 +202,7 @@
                     }
                 },
                 series: [{
-                    name : 'Thumb',
+                    name: 'Thumb',
                     data: [
                         {% for var in thumb_coords.1 %}
                             {{ var }}
@@ -128,13 +238,44 @@
                         {% endfor %}
 
                     ]
-                }]
+                }],
+                yAxis: {
+                    endOnTick: false,
+                    startOnTick: false
+                }
 
+            }, function (chart) {
+                chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();
             });
             $('#container2').highcharts({
                 chart: {
                     type: 'line',
-                    zoomType: 'xy'
+                    zoomType: 'xy',
+                    panning: true,
+                    panKey: 'shift',
+                    events: {
+                        selection: function (event) {
+                            if (event.xAxis || event.yAxis) {
+                                // Zoom in every chart.
+                                var chartX = $('#container').highcharts();
+                                var chartY = $('#container1').highcharts();
+                                chartX.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+                                {#                                chartX.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                chartX.showResetZoom();
+                                chartY.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+                                {#                                chartY.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                chartY.showResetZoom();
+                            } else {
+                                // Zoom out every chart.
+                                var chartX = $('#container').highcharts();
+                                var chartY = $('#container1').highcharts();
+                                chartX.xAxis[0].setExtremes(null, null);
+                                chartX.yAxis[0].setExtremes(null, null);
+                                chartY.xAxis[0].setExtremes(null, null);
+                                chartY.yAxis[0].setExtremes(null, null);
+                            }
+                        }
+                    }
                 },
                 title: {
                     text: 'Positions in Z axes'
@@ -150,7 +291,7 @@
                     }
                 },
                 series: [{
-                    name : 'Thumb',
+                    name: 'Thumb',
                     data: [
                         {% for var in thumb_coords.2 %}
                             {{ var }}
@@ -188,11 +329,15 @@
                     ]
                 }]
 
+            }, function (chart) {
+                chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();
             });
         })
     </script>
 
-    <div id="container" style="width:100%; height:400px;"></div>
+    <div id='test'></div>
+
     <div id="container1" style="width:100%; height:400px;"></div>
+    <div id="container" style="width:100%; height:400px;"></div>
     <div id="container2" style="width:100%; height:400px;"></div>
 {% endblock %}

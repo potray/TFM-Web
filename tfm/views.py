@@ -129,7 +129,6 @@ def list_patients(request):
         patient = Patient.objects.filter(id=request.POST['patient_id']).first()
         patient.delete()
 
-
     doctor_patients = Patient.objects.filter(doctor=request.user).order_by('last_name')
 
     for patient in doctor_patients:
@@ -190,6 +189,7 @@ def patient(request):
                                             'test_results': test_results,
                                             })
 
+
 @login_required
 def test_result(request):
     test_id = request.GET['id']
@@ -200,45 +200,56 @@ def test_result(request):
         test.is_new = False
         test.save()
 
-    # Since the fingers and the times aren't sorted it's necessary to do it this way.
-    coordinates = ['x', 'y', 'z']
-    thumb_coords = [[], [], []]
-    index_coords = [[], [], []]
-    middle_coords = [[], [], []]
-    ring_coords = [[], [], []]
-    pinky_coords = [[], [], []]
 
-    test_json = json.loads(test.result)
+    if (test.test_type == 'SS'):
 
-    for i in range(0, test_json['times'].keys().__len__()):
-        # In each iteration we add either a x, y or z coord.
-        for j in range(0, coordinates.__len__()):
-            # Add a "[<time>, <position in axis>]," string to each array.
-            coordinate = coordinates[j]
-            thumb_coords[j].append(
-                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['thumb'][coordinate][str(i)]) / 10) + ']')
-            index_coords[j].append(
-                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['index'][coordinate][str(i)]) / 10) + ']')
-            middle_coords[j].append(
-                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['middle'][coordinate][str(i)]) / 10) + ']')
-            ring_coords[j].append(
-                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['ring'][coordinate][str(i)]) / 10) + ']')
-            pinky_coords[j].append(
-                '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['pinky'][coordinate][str(i)]) / 10) + ']')
-            if i != test_json['times'].keys().__len__():
-                thumb_coords[j].append(",")
-                index_coords[j].append(",")
-                middle_coords[j].append(",")
-                ring_coords[j].append(",")
-                pinky_coords[j].append(",")
+        # Since the fingers and the times aren't sorted it's necessary to do it this way.
+        coordinates = ['x', 'y', 'z']
+        thumb_coords = [[], [], []]
+        index_coords = [[], [], []]
+        middle_coords = [[], [], []]
+        ring_coords = [[], [], []]
+        pinky_coords = [[], [], []]
 
-    return render(request, 'test_result.html', {'test': test,
-                                                'patient': test.patient,
-                                                'thumb_coords': thumb_coords,
-                                                'index_coords': index_coords,
-                                                'middle_coords': middle_coords,
-                                                'ring_coords': ring_coords,
-                                                'pinky_coords': pinky_coords, })
+        test_json = json.loads(test.result)
+
+        for i in range(0, test_json['times'].keys().__len__()):
+            # In each iteration we add either a x, y or z coord.
+            for j in range(0, coordinates.__len__()):
+                # Add a "[<time>, <position in axis>]," string to each array.
+                coordinate = coordinates[j]
+                thumb_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['thumb'][coordinate][str(i)]) / 10) + ']')
+                index_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['index'][coordinate][str(i)]) / 10) + ']')
+                middle_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(
+                        float(test_json['middle'][coordinate][str(i)]) / 10) + ']')
+                ring_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['ring'][coordinate][str(i)]) / 10) + ']')
+                pinky_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['pinky'][coordinate][str(i)]) / 10) + ']')
+                if i != test_json['times'].keys().__len__():
+                    thumb_coords[j].append(",")
+                    index_coords[j].append(",")
+                    middle_coords[j].append(",")
+                    ring_coords[j].append(",")
+                    pinky_coords[j].append(",")
+
+        return render(request, 'test_result.html', {'test': test,
+                                                    'patient': test.patient,
+                                                    'thumb_coords': thumb_coords,
+                                                    'index_coords': index_coords,
+                                                    'middle_coords': middle_coords,
+                                                    'ring_coords': ring_coords,
+                                                    'pinky_coords': pinky_coords, })
+    elif test.test_type == 'SL':
+
+        return render(request, 'test_result.html', {
+            'test': test,
+            'patient': test.patient,
+        })
+
 
 
 @csrf_exempt
