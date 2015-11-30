@@ -107,10 +107,12 @@
                     startOnTick: false,
                     endOnTick: false,
                     title: {
-                        text: 'Position in x axis'
+                        text: 'Position in x'
                     }
                 },
-                series: [{
+                series: [
+                    {% if test.test_type != "SL" %}
+                    {
                     name: 'Thumb',
                     data: [
 
@@ -118,7 +120,10 @@
                             {{ var }}
                         {% endfor %}
                     ]
-                }, {
+                },
+
+                    {% endif %}
+                    {
                     name: 'Index',
                     data: [
                         {% for var in index_coords.0 %}
@@ -126,7 +131,9 @@
                         {% endfor %}
 
                     ]
-                }, {
+                }
+                    {% if test.test_type != "SL" %}
+                    , {
                     name: 'Middle',
                     data: [
                         {% for var in middle_coords.0 %}
@@ -151,7 +158,9 @@
 
 
                     ]
-                }]
+                }
+                    {% endif %}
+                ]
 
             }, function (chart) {
                 chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();
@@ -197,23 +206,32 @@
                 yAxis: {
                     title: {
                         text: 'Position in y'
-                    }
+                    },
+                    endOnTick: false,
+                    startOnTick: false
                 },
-                series: [{
+                series: [
+                    {% if test.test_type != "SL" %}
+                    {
                     name: 'Thumb',
                     data: [
                         {% for var in thumb_coords.1 %}
                             {{ var }}
                         {% endfor %}
                     ]
-                }, {
+                },
+                    {% endif %}
+                    {
                     name: 'Index',
                     data: [
                         {% for var in index_coords.1 %}
                             {{ var }}
                         {% endfor %}
                     ]
-                }, {
+                }
+
+                    {% if test.test_type != "SL" %}
+                    , {
                     name: 'Middle',
                     data: [
                         {% for var in middle_coords.1 %}
@@ -236,11 +254,9 @@
                         {% endfor %}
 
                     ]
-                }],
-                yAxis: {
-                    endOnTick: false,
-                    startOnTick: false
                 }
+                    {% endif %}
+                ]
 
             }, function (chart) {
                 chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();
@@ -288,21 +304,30 @@
                         text: 'Position in z.'
                     }
                 },
-                series: [{
+                series: [
+                    {% if test.test_type != 'SL' %}
+                    {
                     name: 'Thumb',
                     data: [
                         {% for var in thumb_coords.2 %}
                             {{ var }}
                         {% endfor %}
                     ]
-                }, {
+                },
+                    {% endif %}
+                    {
                     name: 'Index',
                     data: [
                         {% for var in index_coords.2 %}
                             {{ var }}
                         {% endfor %}
                     ]
-                }, {
+                }
+
+                    {% if test.test_type != 'SL' %}
+                    ,
+
+                    {
                     name: 'Middle',
                     data: [
                         {% for var in middle_coords.2 %}
@@ -325,7 +350,9 @@
                         {% endfor %}
 
                     ]
-                }]
+                }
+                    {% endif %}
+                ]
 
             }, function (chart) {
                 chart.yAxis[0].startingExtremes = chart.yAxis[0].getExtremes();

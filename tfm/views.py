@@ -244,10 +244,27 @@ def test_result(request):
                                                     'ring_coords': ring_coords,
                                                     'pinky_coords': pinky_coords, })
     elif test.test_type == 'SL':
+        coordinates = ['x', 'y', 'z']
+        index_coords = [[], [], []]
+
+        test_json = json.loads(test.result)
+
+        for i in range(0, test_json['times'].keys().__len__()):
+            # In each iteration we add either a x, y or z coord.
+            for j in range(0, coordinates.__len__()):
+                # Add a "[<time>, <position in axis>]," string to each array.
+                coordinate = coordinates[j]
+                index_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['index'][coordinate][str(i)]) / 10) + ']')
+
+                if i != test_json['times'].keys().__len__():
+                    index_coords[j].append(",")
+
 
         return render(request, 'test_result.html', {
             'test': test,
             'patient': test.patient,
+            'index_coords': index_coords,
         })
 
 
