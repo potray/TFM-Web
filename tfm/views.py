@@ -236,13 +236,18 @@ def test_result(request):
                     ring_coords[j].append(",")
                     pinky_coords[j].append(",")
 
+        touch_times = []
+        for i in range(0, test_json['touchTimes'].keys().__len__()):
+            touch_times.append(test_json['touchTimes'][str(i)])
+
         return render(request, 'test_result.html', {'test': test,
                                                     'patient': test.patient,
                                                     'thumb_coords': thumb_coords,
                                                     'index_coords': index_coords,
                                                     'middle_coords': middle_coords,
                                                     'ring_coords': ring_coords,
-                                                    'pinky_coords': pinky_coords, })
+                                                    'pinky_coords': pinky_coords,
+                                                    'touch_times': touch_times,})
     elif test.test_type == 'SL':
         coordinates = ['x', 'y', 'z']
         index_coords = [[], [], []]

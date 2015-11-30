@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block content %}
+    {% for time in touch_times %}
+    {% endfor %}
     <h3>Patient: {{ patient.last_name }}, {{ patient.first_name }} </h3>
     <h4>Test date: {{ test.date }}</h4>
     <h4>Type: {{ test.get_test_type_display }}</h4>
@@ -78,10 +80,10 @@
                                 var chartY = $('#container1').highcharts();
                                 var chartZ = $('#container2').highcharts();
                                 chartY.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
-{#                                chartY.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                {#                                chartY.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
                                 chartY.showResetZoom();
                                 chartZ.xAxis[0].setExtremes(event.xAxis[0].min, event.xAxis[0].max);
-{#                                chartZ.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
+                                {#                                chartZ.yAxis[0].setExtremes(event.yAxis[0].min, event.yAxis[0].max);#}
                                 chartZ.showResetZoom();
                             } else {
                                 // Zoom out every chart.
@@ -112,53 +114,61 @@
                 },
                 series: [
                     {% if test.test_type != "SL" %}
-                    {
-                    name: 'Thumb',
-                    data: [
+                        {
+                            name: 'Thumb',
+                            data: [
 
-                        {% for var in thumb_coords.0 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                },
+                                {% for var in thumb_coords.0 %}
+                                    {{ var }}
+                                {% endfor %}
+                            ]
+                        },
 
                     {% endif %}
                     {
-                    name: 'Index',
-                    data: [
-                        {% for var in index_coords.0 %}
-                            {{ var }}
-                        {% endfor %}
+                        name: 'Index',
+                        data: [
+                            {% for var in index_coords.0 %}
+                                {{ var }}
+                            {% endfor %}
 
-                    ]
-                }
+                        ]
+                    }
                     {% if test.test_type != "SL" %}
-                    , {
-                    name: 'Middle',
-                    data: [
-                        {% for var in middle_coords.0 %}
-                            {{ var }}
-                        {% endfor %}
+                        , {
+                        name: 'Middle',
+                        data: [
+                            {% for var in middle_coords.0 %}
+                                {{ var }}
+                            {% endfor %}
 
 
-                    ]
-                }, {
-                    name: 'Ring',
-                    data: [
-                        {% for var in ring_coords.0 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                }, {
-                    name: 'Pinky',
-                    data: [
-                        {% for var in pinky_coords.0 %}
-                            {{ var }}
-                        {% endfor %}
+                        ]
+                    }, {
+                        name: 'Ring',
+                        data: [
+                            {% for var in ring_coords.0 %}
+                                {{ var }}
+                            {% endfor %}
+                        ]
+                    }, {
+                        name: 'Pinky',
+                        data: [
+                            {% for var in pinky_coords.0 %}
+                                {{ var }}
+                            {% endfor %}
 
 
-                    ]
-                }
+                        ]
+                    }, {
+                        name: 'Hook Touched',
+                        data: [
+                            [0,-30],
+                            {% for var in touch_times %}
+                                [{{ var }},-30],[{{ var }},30],[{{ var }},-30],
+                            {% endfor %}
+                        ]
+                    }
                     {% endif %}
                 ]
 
@@ -212,49 +222,57 @@
                 },
                 series: [
                     {% if test.test_type != "SL" %}
-                    {
-                    name: 'Thumb',
-                    data: [
-                        {% for var in thumb_coords.1 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                },
+                        {
+                            name: 'Thumb',
+                            data: [
+                                {% for var in thumb_coords.1 %}
+                                    {{ var }}
+                                {% endfor %}
+                            ]
+                        },
                     {% endif %}
                     {
-                    name: 'Index',
-                    data: [
-                        {% for var in index_coords.1 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                }
+                        name: 'Index',
+                        data: [
+                            {% for var in index_coords.1 %}
+                                {{ var }}
+                            {% endfor %}
+                        ]
+                    }
 
                     {% if test.test_type != "SL" %}
-                    , {
-                    name: 'Middle',
-                    data: [
-                        {% for var in middle_coords.1 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                }, {
-                    name: 'Ring',
-                    data: [
-                        {% for var in ring_coords.1 %}
-                            {{ var }}
-                        {% endfor %}
+                        , {
+                        name: 'Middle',
+                        data: [
+                            {% for var in middle_coords.1 %}
+                                {{ var }}
+                            {% endfor %}
+                        ]
+                    }, {
+                        name: 'Ring',
+                        data: [
+                            {% for var in ring_coords.1 %}
+                                {{ var }}
+                            {% endfor %}
 
-                    ]
-                }, {
-                    name: 'Pinky',
-                    data: [
-                        {% for var in pinky_coords.1 %}
-                            {{ var }}
-                        {% endfor %}
+                        ]
+                    }, {
+                        name: 'Pinky',
+                        data: [
+                            {% for var in pinky_coords.1 %}
+                                {{ var }}
+                            {% endfor %}
 
-                    ]
-                }
+                        ]
+                    }, {
+                        name: 'Hook Touched',
+                        data: [
+                            [0,0],
+                            {% for var in touch_times %}
+                                [{{ var }},0],[{{ var }},40],[{{ var }},-0],
+                            {% endfor %}
+                        ]
+                    }
                     {% endif %}
                 ]
 
@@ -306,51 +324,59 @@
                 },
                 series: [
                     {% if test.test_type != 'SL' %}
-                    {
-                    name: 'Thumb',
-                    data: [
-                        {% for var in thumb_coords.2 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                },
+                        {
+                            name: 'Thumb',
+                            data: [
+                                {% for var in thumb_coords.2 %}
+                                    {{ var }}
+                                {% endfor %}
+                            ]
+                        },
                     {% endif %}
                     {
-                    name: 'Index',
-                    data: [
-                        {% for var in index_coords.2 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                }
+                        name: 'Index',
+                        data: [
+                            {% for var in index_coords.2 %}
+                                {{ var }}
+                            {% endfor %}
+                        ]
+                    }
 
                     {% if test.test_type != 'SL' %}
-                    ,
+                        ,
 
-                    {
-                    name: 'Middle',
-                    data: [
-                        {% for var in middle_coords.2 %}
-                            {{ var }}
-                        {% endfor %}
-                    ]
-                }, {
-                    name: 'Ring',
-                    data: [
-                        {% for var in ring_coords.2 %}
-                            {{ var }}
-                        {% endfor %}
+                        {
+                            name: 'Middle',
+                            data: [
+                                {% for var in middle_coords.2 %}
+                                    {{ var }}
+                                {% endfor %}
+                            ]
+                        }, {
+                        name: 'Ring',
+                        data: [
+                            {% for var in ring_coords.2 %}
+                                {{ var }}
+                            {% endfor %}
 
-                    ]
-                }, {
-                    name: 'Pinky',
-                    data: [
-                        {% for var in pinky_coords.2 %}
-                            {{ var }}
-                        {% endfor %}
+                        ]
+                    }, {
+                        name: 'Pinky',
+                        data: [
+                            {% for var in pinky_coords.2 %}
+                                {{ var }}
+                            {% endfor %}
 
-                    ]
-                }
+                        ]
+                    }, {
+                        name: 'Hook Touched',
+                        data: [
+                            [0,-20],
+                            {% for var in touch_times %}
+                                [{{ var }},-20],[{{ var }},20],[{{ var }},-20],
+                            {% endfor %}
+                        ]
+                    }
                     {% endif %}
                 ]
 
