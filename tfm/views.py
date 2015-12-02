@@ -201,7 +201,7 @@ def validate_patient_code(request):
         response['diary_simon_says_hand'] = patient[0].settings.diary_simon_says_hand
         response['diary_simon_says_tool'] = patient[0].settings.diary_simon_says_tool
         response['simon_says_hand_max_hooks'] = patient[0].settings.simon_says_hand_max_hooks
-        response['diary_straight_line'] = patient[0].settings.diary_straight_line
+        response['simon_says_tool_max_hooks'] = patient[0].settings.simon_says_tool_max_hooks
     else:
         response['ok'] = False
     print response
