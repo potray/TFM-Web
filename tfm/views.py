@@ -272,6 +272,34 @@ def test_result(request):
             'index_coords': index_coords,
         })
 
+    elif test.test_type == 'ST':
+        coordinates = ['x', 'y', 'z']
+        tool_coords = [[], [], []]
+
+        test_json = json.loads(test.result)
+        for i in range(0, test_json['times'].keys().__len__()):
+            # In each iteration we add either a x, y or z coord.
+            for j in range(0, coordinates.__len__()):
+                # Add a "[<time>, <position in axis>]," string to each array.
+                coordinate = coordinates[j]
+                tool_coords[j].append(
+                    '[' + test_json['times'][str(i)] + ', ' + str(float(test_json['tool'][coordinate][str(i)]) / 10) + ']')
+
+                if i != test_json['times'].keys().__len__():
+                    tool_coords[j].append(",")
+
+        touch_times = []
+        for i in range(0, test_json['touchTimes'].keys().__len__()):
+            touch_times.append(test_json['touchTimes'][str(i)])
+
+        return render(request, 'test_result.html', {
+            'test': test,
+            'patient': test.patient,
+            'tool_coords': tool_coords,
+            'touch_times': touch_times,
+        })
+
+
 
 
 @csrf_exempt

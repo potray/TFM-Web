@@ -33,9 +33,11 @@ class Patient(models.Model):
 class TestResult(models.Model):
     SIMON_SAYS = "SS"
     STRAIGHT_LINE = "SL"
+    SIMON_SAYS_TOOL = "ST"
     TEST_CHOICES = (
         (SIMON_SAYS, 'Simon says'),
         (STRAIGHT_LINE, "Straight line"),
+        (SIMON_SAYS_TOOL, "Simon says with a tool")
     )
     test_type = models.CharField(max_length=2, choices=TEST_CHOICES)
     date = models.DateTimeField(auto_now_add=True)
