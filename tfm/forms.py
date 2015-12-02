@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-from models import Doctor, Patient
+from models import Doctor, Patient, PatientSettings
 from django.contrib.auth.models import User
 
 
@@ -72,4 +72,9 @@ class CreatePatientForm(ModelForm):
             'history': forms.Textarea(attrs={'class': 'materialize-textarea', })
         }
         # We exclude the sex because MaterializeCss has some problems rendering it.
-        exclude = ('doctor', 'sex', 'birth_date')
+        exclude = ('doctor', 'sex', 'birth_date', 'settings')
+
+class PatientSettingsForm(ModelForm):
+    class Meta:
+        model = PatientSettings
+        fields = '__all__'

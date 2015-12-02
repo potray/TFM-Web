@@ -1,0 +1,18 @@
+{% extends "base_logged_in.html" %}
+{% block title %}{{ patient.last_name }}, {{ patient.first_name }}{% endblock title %}
+{% block breadcrumbs %}
+    <a href='/patients/patient?id={{ patient.id }}' class='breadcrumb'>{{ patient.last_name }}, {{ patient.first_name }}</a>
+    <a class='breadcrumb'>Tests settings</a>
+{% endblock %}
+{% block content %}
+    <h3>{{ patient.first_name }} {{ patient.last_name }}'s test settings</h3>
+    <h5>Instructions:</h5>
+    <h6>For diary settings, enter -1 if you don't want to assign the patient a minimum number of diary test.
+        Enter 0 if you don't want the patient to perform the test.</h6>
+    <form action="#" method='POST'>
+        {% csrf_token %}
+        {{ form }}
+        <button type=submit class="btn waves-effect waves-light">Save</button>
+    </form>
+
+{% endblock %}

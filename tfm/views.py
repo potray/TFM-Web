@@ -6,8 +6,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta, date
-from forms import UserRegistrationForm, LoginForm, CreatePatientForm
-from tfm.models import Patient, TestResult
+from forms import UserRegistrationForm, LoginForm, CreatePatientForm, PatientSettingsForm
+from tfm.models import Patient, TestResult, PatientSettings
 import json
 
 
@@ -98,6 +98,10 @@ def create_patient(request):
                     patient.sex = False
                 # The patient's doctor is the user
                 patient.doctor = request.user
+                # Create default settings
+                settings = PatientSettings()
+                settings.save()
+                patient.settings = settings
                 # Create a date from the form info
                 date_string = request.POST['birth_date']
                 day = int(date_string[0:2])
@@ -121,6 +125,35 @@ def create_patient(request):
     attrs['form'] = form
     return render(request, 'create_patient.html', attrs)
 
+
+@login_required
+def patient_settings(request):
+    # Get patient
+    patient = Patient.objects.filter(id=request.GET['id']).first()
+    if request.method == 'POST':
+        # Get sent data and save the settings.
+        form = PatientSettingsForm(request.POST)
+        if form.is_valid():
+            settings = form.instance
+            print settings.diary_straight_line
+            previous_settings = patient.settings
+            previous_settings.delete()
+            settings.save()
+            patient.settings = settings
+            patient.save()
+
+    render_form = PatientSettingsForm()
+
+    # Prefill the fields
+    settings = patient.settings
+    render_form.fields['diary_straight_line'].initial = settings.diary_straight_line
+    render_form.fields['diary_simon_says_hand'].initial = settings.diary_simon_says_hand
+    render_form.fields['diary_simon_says_tool'].initial = settings.diary_simon_says_tool
+    render_form.fields['simon_says_hand_max_hooks'].initial = settings.simon_says_hand_max_hooks
+    render_form.fields['simon_says_tool_max_hooks'].initial = settings.simon_says_tool_max_hooks
+
+    return render(request, 'patient_settings.html', {'patient': patient,
+                                                     'form': render_form})
 
 @login_required
 def list_patients(request):
@@ -164,6 +197,11 @@ def validate_patient_code(request):
         response['first_name'] = patient[0].first_name
         response['last_name'] = patient[0].last_name
         response['ok'] = True
+        response['diary_straight_line'] = patient[0].settings.diary_straight_line
+        response['diary_simon_says_hand'] = patient[0].settings.diary_simon_says_hand
+        response['diary_simon_says_tool'] = patient[0].settings.diary_simon_says_tool
+        response['simon_says_hand_max_hooks'] = patient[0].settings.simon_says_hand_max_hooks
+        response['diary_straight_line'] = patient[0].settings.diary_straight_line
     else:
         response['ok'] = False
     print response

@@ -13,6 +13,16 @@ class Doctor(models.Model):
     specialization = models.CharField(max_length=100)
 
 
+class PatientSettings(models.Model):
+    # 0 means the test is locked for the patient, -1 means no minimum diary tests.
+    diary_straight_line = models.IntegerField(default=-1)
+    diary_simon_says_hand = models.IntegerField(default=-1)
+    diary_simon_says_tool = models.IntegerField(default=-1)
+
+    simon_says_hand_max_hooks = models.IntegerField(default=5)
+    simon_says_tool_max_hooks = models.IntegerField(default=5)
+
+
 class Patient(models.Model):
     MALE = 'M'
     FEMALE = 'F'
@@ -28,7 +38,7 @@ class Patient(models.Model):
     doctor = models.ForeignKey(User)
     birth_date = models.DateField()
     photo = models.ImageField(upload_to='photos', blank=True, default='photos/default.png')
-
+    settings = models.ForeignKey(PatientSettings)
 
 class TestResult(models.Model):
     SIMON_SAYS = "SS"
