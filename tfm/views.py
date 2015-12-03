@@ -104,6 +104,7 @@ def create_patient(request):
                 patient.settings = settings
                 # Create a date from the form info
                 date_string = request.POST['birth_date']
+                print date_string
                 day = int(date_string[0:2])
                 month = int(date_string[3:5])
                 year = int(date_string[6:10])
