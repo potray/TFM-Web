@@ -7,9 +7,6 @@ import views
 from tfm import settings
 
 urlpatterns = patterns('',
-                       # Examples:
-                       # url(r'^$', 'tfm.views.home', name='home'),
-                       # url(r'^blog/', include('blog.urls')),
                        url(r'^$', views.index),
                        url(r'^registration/', views.registration),
                        url(r'^login/', views.user_login),

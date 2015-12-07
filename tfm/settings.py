@@ -91,6 +91,7 @@ DATABASES = {}
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# Use a local database if I'm working on local.
 if (os.getenv('COMPUTERNAME', '')).startswith('YARRICK'):
     DATABASES = {
         'default': {
@@ -100,8 +101,6 @@ if (os.getenv('COMPUTERNAME', '')).startswith('YARRICK'):
     }
 else:
     DATABASES['default'] = dj_database_url.config()
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -109,22 +108,11 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
-
-# Parse database configuration from $DATABASE_URL
-
-# Enable Connection Pooling (if desired)
-# DATABASES['default']['ENGINE'] = 'django_postgrespool'
-# DATABASES['default']['NAME'] = 'tfmherokudb'
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_ROOT = 'staticfiles'
 # STATIC_URL = '/static/'
@@ -135,10 +123,6 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Django-allauth settings
 AUTHENTICATION_BACKENDS = (
@@ -163,36 +147,3 @@ STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 AWS_STORAGE_BUCKET_NAME = 'tfmheroku'
 STATIC_URL = 'http://s3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME + '/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-#
-# import sys
-# import urlparse
-#
-# # Register database schemes in URLs.
-# urlparse.uses_netloc.append('postgres')
-# urlparse.uses_netloc.append('mysql')
-#
-# try:
-#     if 'DATABASES' not in locals():
-#         DATABASES = {}
-#
-#     if 'DATABASE_URL' in os.environ:
-#         url = urlparse.urlparse(os.environ['DATABASE_URL'])
-#
-#         # Ensure default database exists.
-#         DATABASES['default'] = DATABASES.get('default', {})
-#
-#         # Update with environment configuration.
-#         DATABASES['default'].update({
-#             'NAME': url.path[1:],
-#             'USER': url.username,
-#             'PASSWORD': url.password,
-#             'HOST': url.hostname,
-#             'PORT': url.port,
-#         })
-#         if url.scheme == 'postgres':
-#             DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-#
-#         if url.scheme == 'mysql':
-#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-# except Exception:
-#     print 'Unexpected error:', sys.exc_info()
