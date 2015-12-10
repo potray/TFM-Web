@@ -10,13 +10,6 @@ from forms import UserRegistrationForm, LoginForm, CreatePatientForm, PatientSet
 from tfm.models import Patient, TestResult, PatientSettings
 import json
 
-
-def index(request):
-    if request.user.is_authenticated():
-        return notifications(request)
-    return render(request, 'index.html')
-
-
 def registration(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -33,7 +26,7 @@ def registration(request):
     return render(request, 'registration.html', {'form': form})
 
 
-def user_login(request):
+def index(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -45,7 +38,7 @@ def user_login(request):
                 print"no"
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
 
 
 @login_required
