@@ -131,10 +131,10 @@ def patient_settings(request):
             settings = form.instance
             print settings.diary_straight_line
             previous_settings = patient.settings
-            previous_settings.delete()
             settings.save()
             patient.settings = settings
             patient.save()
+            previous_settings.delete()
 
     render_form = PatientSettingsForm()
 
